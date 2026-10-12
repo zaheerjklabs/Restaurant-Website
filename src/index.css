@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-accent: "Caveat", cursive;
+
+  --color-amber-burnt: #E96A24;
+  --color-amber-burnt-hover: #D35817;
+  --color-forest-deep: #243C24;
+  --color-forest-subtle: #2E4B2E;
+  --color-charcoal-dark: #171714;
+  --color-charcoal-text: #20211D;
+  --color-warm-ivory: #FAF8F3;
+  --color-warm-gray: #77766F;
+}
+
+/* Custom scrollbar and smooth transitions */
+html {
+  font-family: var(--font-sans);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+}
+
+/* Hide scrollbar for clean category carousel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

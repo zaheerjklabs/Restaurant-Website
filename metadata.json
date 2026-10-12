@@ -1,0 +1,8 @@
+{
+  "name": "Maison L'Ambre | Premium Artisanal Restaurant & Dining",
+  "description": "Award-winning contemporary dining, signature wood-fired cuisine, online table reservations, and seamless ordering. Good Food. Beautiful Moments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
