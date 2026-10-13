@@ -70,7 +70,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
   };
 
   return (
-    <section id="menu" className="py-20 lg:py-28 bg-[#FAF8F3]">
+    <section id="menu" className="py-20 lg:py-28 bg-[#FAF8F3]/80 backdrop-blur-md relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

@@ -2,6 +2,7 @@ import React from 'react';
 import { ImageWithFallback } from '../common/ImageWithFallback';
 import { RESTAURANT_INFO, PILLARS_OF_EXCELLENCE } from '../../data/restaurantData';
 import { Leaf, ChefHat, Sparkles } from 'lucide-react';
+import { Tilt3DCard } from '../scrollytelling/Tilt3DCard';
 
 interface StorySectionProps {
   onOpenReservationModal: () => void;
@@ -15,31 +16,36 @@ export const StorySection: React.FC<StorySectionProps> = ({ onOpenReservationMod
   ];
 
   return (
-    <section id="story" className="py-20 lg:py-28 bg-[#FFFFFF] border-y border-stone-200/60">
+    <section id="story" className="py-20 lg:py-28 bg-white/75 backdrop-blur-md border-y border-stone-200/60 relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Architectural Atmosphere Photography */}
           <div className="lg:col-span-5 order-2 lg:order-1 relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-stone-200/70 bg-stone-100 aspect-[4/3] sm:aspect-[4/3]">
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
-                alt="Maison L'Ambre dining room ambiance and open kitchen hearth"
-                fallbackTitle="Restaurant Interior & Hearth"
-                fallbackGradient="from-stone-900 via-amber-950 to-stone-900"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <Tilt3DCard maxTilt={8} scale={1.02} glare={true}>
+              <div className="relative rounded-2xl overflow-hidden shadow-xl border border-stone-200/70 bg-stone-100 aspect-[4/3] sm:aspect-[4/3]">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
+                  alt="Maison L'Ambre dining room ambiance and open kitchen hearth"
+                  fallbackTitle="Restaurant Interior & Hearth"
+                  fallbackGradient="from-stone-900 via-amber-950 to-stone-900"
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-            {/* Overlapping feature detail card */}
-            <div className="mt-6 sm:mt-0 sm:absolute sm:-bottom-8 sm:-right-6 bg-[#FAF8F3] p-5 rounded-xl border border-stone-200 shadow-lg sm:max-w-xs">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#E96A24] mb-1">
-                Open Hearth Kitchen
-              </p>
-              <p className="text-xs text-[#77766F] leading-relaxed">
-                Wood-fired cooking over seasoned English oak and fruitwood logs at 800°F.
-              </p>
-            </div>
+              {/* Overlapping feature detail card with 3D shadow */}
+              <div className="mt-6 sm:mt-0 sm:absolute sm:-bottom-8 sm:-right-6 bg-[#FAF8F3]/95 backdrop-blur-md p-5 rounded-xl border border-stone-200 shadow-xl sm:max-w-xs z-10">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="w-2 h-2 rounded-full bg-[#E96A24] animate-pulse" />
+                  <p className="text-xs font-semibold uppercase tracking-widest text-[#E96A24]">
+                    Open Hearth Kitchen
+                  </p>
+                </div>
+                <p className="text-xs text-[#77766F] leading-relaxed">
+                  Wood-fired cooking over seasoned English oak and fruitwood logs at 800°F.
+                </p>
+              </div>
+            </Tilt3DCard>
           </div>
 
           {/* Right Column: Editorial Philosophy */}

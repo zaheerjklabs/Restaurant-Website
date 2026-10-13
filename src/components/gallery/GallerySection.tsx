@@ -8,7 +8,7 @@ export const GallerySection: React.FC = () => {
   const [activeLightboxIndex, setActiveLightboxIndex] = useState<number | null>(null);
 
   return (
-    <section id="gallery" className="py-20 lg:py-28 bg-[#FFFFFF] border-y border-stone-200/60">
+    <section id="gallery" className="py-20 lg:py-28 bg-white/75 backdrop-blur-md border-y border-stone-200/60 relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

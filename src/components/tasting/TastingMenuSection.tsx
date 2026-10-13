@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TASTING_EXPERIENCES, TASTING_COURSES } from '../../data/tastingMenuData';
 import { useCurrency } from '../../context/CurrencyContext';
 import { Sparkles, Wine, Clock, Utensils, ArrowRight, Check } from 'lucide-react';
+import { Tilt3DCard } from '../scrollytelling/Tilt3DCard';
 
 interface TastingMenuSectionProps {
   onReserveTasting: (experienceId: string) => void;
@@ -16,7 +17,7 @@ export const TastingMenuSection: React.FC<TastingMenuSectionProps> = ({ onReserv
   const activeCourse = TASTING_COURSES[activeCourseIndex] || TASTING_COURSES[0];
 
   return (
-    <section id="tasting-menu" className="py-20 lg:py-28 bg-[#171714] text-white relative overflow-hidden">
+    <section id="tasting-menu" className="py-20 lg:py-28 bg-[#171714]/85 backdrop-blur-md text-white relative z-20 overflow-hidden">
       {/* Ambient background glows */}
       <div 
         className="absolute top-1/4 right-0 w-96 h-96 bg-[#E96A24]/10 rounded-full blur-3xl pointer-events-none" 
@@ -120,65 +121,67 @@ export const TastingMenuSection: React.FC<TastingMenuSectionProps> = ({ onReserv
 
           {/* Right Column: Active Course Spotlight with Sommelier Notes */}
           <div className="lg:col-span-7">
-            <div className="h-full bg-gradient-to-br from-stone-900 to-[#243C24]/40 p-8 sm:p-10 rounded-2xl border border-white/15 shadow-2xl flex flex-col justify-between">
-              
-              <div>
-                <div className="flex items-center justify-between text-xs text-stone-400 pb-4 border-b border-white/10 mb-6">
-                  <span className="font-mono text-[#E96A24] font-bold">COURSE 0{activeCourse.courseNumber} OF 05</span>
-                  <span>{activeCourse.dietaryNotes}</span>
-                </div>
-
-                <div className="space-y-4">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-amber-300">
-                    {activeCourse.title}
-                  </span>
-                  <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
-                    {activeCourse.dishName}
-                  </h3>
-                  <p className="text-sm text-stone-300 leading-relaxed max-w-xl">
-                    {activeCourse.description}
-                  </p>
-                </div>
-
-                {/* Sommelier Pairing Highlight */}
-                <div className="mt-8 p-5 rounded-xl bg-black/40 border border-white/10 space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300">
-                    <Wine className="w-4 h-4" />
-                    <span>Sommelier Cellar Pairing</span>
+            <Tilt3DCard maxTilt={6} scale={1.01} glare={true} className="h-full">
+              <div className="h-full bg-gradient-to-br from-stone-900 via-[#1e1e1a] to-[#243C24]/50 p-8 sm:p-10 rounded-2xl border border-white/20 shadow-2xl flex flex-col justify-between backdrop-blur-md">
+                
+                <div>
+                  <div className="flex items-center justify-between text-xs text-stone-400 pb-4 border-b border-white/10 mb-6">
+                    <span className="font-mono text-[#E96A24] font-bold">COURSE 0{activeCourse.courseNumber} OF 05</span>
+                    <span className="px-2 py-0.5 rounded bg-white/10 text-stone-300 font-mono text-[10px]">{activeCourse.dietaryNotes}</span>
                   </div>
-                  
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h4 className="text-base font-serif font-bold text-white">
-                      {activeCourse.winePairing.wine}
-                    </h4>
-                    <span className="text-xs font-mono text-stone-400">
-                      {activeCourse.winePairing.vintage} · {activeCourse.winePairing.region}
+
+                  <div className="space-y-4">
+                    <span className="text-xs font-semibold uppercase tracking-widest text-amber-300">
+                      {activeCourse.title}
                     </span>
+                    <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                      {activeCourse.dishName}
+                    </h3>
+                    <p className="text-sm text-stone-300 leading-relaxed max-w-xl">
+                      {activeCourse.description}
+                    </p>
                   </div>
 
-                  <p className="text-xs text-stone-300 italic pt-1">
-                    "{activeCourse.winePairing.sommelierNotes}"
-                  </p>
+                  {/* Sommelier Pairing Highlight */}
+                  <div className="mt-8 p-5 rounded-xl bg-black/50 border border-white/10 space-y-2">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300">
+                      <Wine className="w-4 h-4" />
+                      <span>Sommelier Cellar Pairing</span>
+                    </div>
+                    
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h4 className="text-base font-serif font-bold text-white">
+                        {activeCourse.winePairing.wine}
+                      </h4>
+                      <span className="text-xs font-mono text-stone-400">
+                        {activeCourse.winePairing.vintage} · {activeCourse.winePairing.region}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-stone-300 italic pt-1">
+                      "{activeCourse.winePairing.sommelierNotes}"
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Booking CTA Footer */}
-              <div className="pt-8 mt-8 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-                <div className="text-xs text-stone-400">
-                  <div className="font-semibold text-white">Seating Duration: {activeExp.duration}</div>
-                  <div>Advance reservation requested. Vegetarian progression available.</div>
+                {/* Booking CTA Footer */}
+                <div className="pt-8 mt-8 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                  <div className="text-xs text-stone-400">
+                    <div className="font-semibold text-white">Seating Duration: {activeExp.duration}</div>
+                    <div>Advance reservation requested. Vegetarian progression available.</div>
+                  </div>
+
+                  <button
+                    onClick={() => onReserveTasting(selectedExperience)}
+                    className="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white bg-[#E96A24] hover:bg-[#D35817] rounded-xl transition-colors shadow-lg flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    <span>Reserve This Tasting</span>
+                  </button>
                 </div>
 
-                <button
-                  onClick={() => onReserveTasting(selectedExperience)}
-                  className="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white bg-[#E96A24] hover:bg-[#D35817] rounded-xl transition-colors shadow-lg flex items-center justify-center gap-2 whitespace-nowrap"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span>Reserve This Tasting</span>
-                </button>
               </div>
-
-            </div>
+            </Tilt3DCard>
           </div>
 
         </div>

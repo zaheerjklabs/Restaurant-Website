@@ -25,6 +25,9 @@ import { CheckoutModal } from './components/cart/CheckoutModal';
 import { ToastContainer } from './components/common/ToastContainer';
 import { ConfirmedReservation, ActiveOrder } from './types';
 import { Clock } from 'lucide-react';
+import { Global3DWorldCanvas } from './components/scrollytelling/Global3DWorldCanvas';
+import { CinematicHUD } from './components/scrollytelling/CinematicHUD';
+import { ParallaxFloatingElements } from './components/scrollytelling/ParallaxFloatingElements';
 
 const MainContent: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,6 +36,10 @@ const MainContent: React.FC = () => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isPrivateDiningOpen, setIsPrivateDiningOpen] = useState(false);
   
+  // Scrollytelling 3D & Cinema Modes
+  const [isPinned3D, setIsPinned3D] = useState(false);
+  const [isCinemaBarsActive, setIsCinemaBarsActive] = useState(false);
+
   // Active Order Live Tracking State
   const [activeOrder, setActiveOrder] = useState<ActiveOrder | null>(null);
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
@@ -67,7 +74,14 @@ const MainContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F3] text-[#20211D]">
+    <div className="min-h-screen flex flex-col bg-[#FAF8F3]/70 text-[#20211D] relative overflow-x-hidden selection:bg-[#E96A24]/20 selection:text-[#E96A24]">
+      {/* Permanent Fullscreen 3D World Canvas running across the ENTIRE website */}
+      <Global3DWorldCanvas
+        className="w-full h-full"
+        isInteractiveMode={isPinned3D}
+        onToggleInteractive={() => setIsPinned3D(!isPinned3D)}
+      />
+
       {/* Navigation Header with Currency Switcher & Order Indicator */}
       <Navbar
         onOpenReservationModal={handleOpenReservation}
@@ -77,9 +91,16 @@ const MainContent: React.FC = () => {
         hasActiveOrder={activeOrder !== null}
       />
 
-      <main className="flex-1">
-        {/* 1. Hero Section */}
-        <HeroSection onOpenReservationModal={handleOpenReservation} />
+      {/* Global 3D Floating Particles on Scroll */}
+      <ParallaxFloatingElements />
+
+      <main className="flex-1 relative z-20">
+        {/* 1. Hero Section with 3D Centerpiece */}
+        <HeroSection
+          onOpenReservationModal={handleOpenReservation}
+          isPinned3D={isPinned3D}
+          onTogglePinned3D={() => setIsPinned3D(!isPinned3D)}
+        />
 
         {/* 2. Restaurant Introduction & Story */}
         <StorySection onOpenReservationModal={handleOpenReservation} />
@@ -128,6 +149,14 @@ const MainContent: React.FC = () => {
       {/* Footer */}
       <Footer />
 
+      {/* Cinematic Scrollytelling Video HUD Bar */}
+      <CinematicHUD
+        isPinned3D={isPinned3D}
+        onTogglePinned3D={() => setIsPinned3D(!isPinned3D)}
+        isCinemaBarsActive={isCinemaBarsActive}
+        onToggleCinemaBars={() => setIsCinemaBarsActive(!isCinemaBarsActive)}
+      />
+
       {/* Slide-over Cart Drawer */}
       <CartDrawer onOpenCheckout={() => setIsCheckoutOpen(true)} />
 
@@ -161,7 +190,7 @@ const MainContent: React.FC = () => {
       {activeOrder && (
         <aside
           aria-label="Active order status"
-          className="fixed bottom-6 left-6 z-40 bg-[#171714] text-white px-4 py-3 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-3 animate-in fade-in slide-in-from-bottom duration-300"
+          className="fixed bottom-20 left-6 z-40 bg-[#171714] text-white px-4 py-3 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-3 animate-in fade-in slide-in-from-bottom duration-300"
         >
           <div className="w-8 h-8 rounded-full bg-[#E96A24]/20 text-[#E96A24] flex items-center justify-center">
             <Clock className="w-4 h-4 animate-spin" />
@@ -176,7 +205,7 @@ const MainContent: React.FC = () => {
           </div>
           <button
             onClick={() => setIsTrackingOpen(true)}
-            className="ml-2 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider bg-[#E96A24] hover:bg-[#D35817] rounded-lg transition-colors"
+            className="ml-2 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider bg-[#E96A24] hover:bg-[#D35817] rounded-lg transition-colors cursor-pointer"
           >
             Track Live
           </button>

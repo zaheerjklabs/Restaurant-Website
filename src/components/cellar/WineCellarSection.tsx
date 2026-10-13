@@ -5,6 +5,7 @@ import { useCart } from '../../context/CartContext';
 import { useToast } from '../../context/ToastContext';
 import { Wine, Plus, Sparkles, Compass } from 'lucide-react';
 import { MenuItem } from '../../types';
+import { Tilt3DCard } from '../scrollytelling/Tilt3DCard';
 
 export const WineCellarSection: React.FC = () => {
   const { formatPrice } = useCurrency();
@@ -37,7 +38,7 @@ export const WineCellarSection: React.FC = () => {
   };
 
   return (
-    <section id="cellar" className="py-20 lg:py-28 bg-[#FAF8F3] border-b border-stone-200/60">
+    <section id="cellar" className="py-20 lg:py-28 bg-[#FAF8F3]/80 backdrop-blur-md border-b border-stone-200/60 relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -76,56 +77,55 @@ export const WineCellarSection: React.FC = () => {
         {/* Wine Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredWines.map((wine) => (
-            <div
-              key={wine.id}
-              className="bg-white rounded-2xl p-6 border border-stone-200/80 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <div>
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#E96A24]">
-                      {wine.type} · {wine.vintage}
-                    </span>
-                    <h3 className="font-serif font-bold text-lg text-[#171714] mt-0.5 leading-snug">
-                      {wine.name}
-                    </h3>
-                  </div>
-
-                  <div className="text-right shrink-0">
-                    <div className="font-serif font-bold text-base text-[#171714] tabular-nums">
-                      {formatPrice(wine.bottlePrice)}
+            <Tilt3DCard key={wine.id} maxTilt={6} scale={1.02} glare={true}>
+              <div className="bg-white rounded-2xl p-6 border border-stone-200/80 shadow-xs hover:shadow-xl transition-all h-full flex flex-col justify-between">
+                <div>
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div>
+                      <span className="text-[11px] font-semibold uppercase tracking-wider text-[#E96A24]">
+                        {wine.type} · {wine.vintage}
+                      </span>
+                      <h3 className="font-serif font-bold text-lg text-[#171714] mt-0.5 leading-snug">
+                        {wine.name}
+                      </h3>
                     </div>
-                    {wine.glassPrice && (
-                      <div className="text-[11px] text-stone-500 tabular-nums">
-                        glass {formatPrice(wine.glassPrice)}
+
+                    <div className="text-right shrink-0">
+                      <div className="font-serif font-bold text-base text-[#171714] tabular-nums">
+                        {formatPrice(wine.bottlePrice)}
                       </div>
-                    )}
+                      {wine.glassPrice && (
+                        <div className="text-[11px] text-stone-500 tabular-nums">
+                          glass {formatPrice(wine.glassPrice)}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 text-xs text-stone-500 mb-4">
+                    <Compass className="w-3.5 h-3.5" />
+                    <span>{wine.region}, {wine.country}</span>
+                  </div>
+
+                  <p className="text-xs text-[#77766F] leading-relaxed mb-4">
+                    "{wine.tastingNotes}"
+                  </p>
+
+                  <div className="p-3 bg-stone-50 rounded-xl border border-stone-100 text-[11px] text-stone-600 mb-6">
+                    <strong className="text-[#171714]">Chef Pairing:</strong> {wine.pairingDish}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-xs text-stone-500 mb-4">
-                  <Compass className="w-3.5 h-3.5" />
-                  <span>{wine.region}, {wine.country}</span>
-                </div>
-
-                <p className="text-xs text-[#77766F] leading-relaxed mb-4">
-                  "{wine.tastingNotes}"
-                </p>
-
-                <div className="p-3 bg-stone-50 rounded-xl border border-stone-100 text-[11px] text-stone-600 mb-6">
-                  <strong className="text-[#171714]">Chef Pairing:</strong> {wine.pairingDish}
-                </div>
+                {/* Action */}
+                <button
+                  onClick={() => handleAddWineToCart(wine)}
+                  className="w-full py-2.5 px-4 text-xs font-semibold uppercase tracking-wider text-stone-800 hover:text-white bg-stone-100 hover:bg-[#171714] rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>Add Bottle to Order</span>
+                </button>
               </div>
-
-              {/* Action */}
-              <button
-                onClick={() => handleAddWineToCart(wine)}
-                className="w-full py-2.5 px-4 text-xs font-semibold uppercase tracking-wider text-stone-800 hover:text-white bg-stone-100 hover:bg-[#171714] rounded-lg transition-colors flex items-center justify-center gap-1.5"
-              >
-                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span>Add Bottle to Order</span>
-              </button>
-            </div>
+            </Tilt3DCard>
           ))}
         </div>
 

@@ -16,7 +16,7 @@ export const TestimonialsSection: React.FC = () => {
   const current = TESTIMONIALS[currentIndex];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#FAF8F3] overflow-hidden">
+    <section className="py-20 lg:py-28 bg-[#FAF8F3]/80 backdrop-blur-md relative z-20 overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Eyebrow */}

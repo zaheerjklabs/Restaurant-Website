@@ -5,6 +5,7 @@ import { useCart } from '../../context/CartContext';
 import { useToast } from '../../context/ToastContext';
 import { useCurrency } from '../../context/CurrencyContext';
 import { Plus, Heart, SlidersHorizontal, Wine } from 'lucide-react';
+import { Tilt3DCard } from '../scrollytelling/Tilt3DCard';
 
 interface MenuCardProps {
   item: MenuItem;
@@ -35,10 +36,11 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item, onOpenDetails }) => {
   };
 
   return (
-    <article
-      onClick={() => onOpenDetails(item)}
-      className="group cursor-pointer bg-white rounded-xl border border-stone-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
-    >
+    <Tilt3DCard maxTilt={7} scale={1.02} glare={true} className="h-full">
+      <article
+        onClick={() => onOpenDetails(item)}
+        className="group cursor-pointer bg-white/95 backdrop-blur-md rounded-xl border border-stone-200/80 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full"
+      >
       <div>
         {/* Dish Photography with zoom hover */}
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
@@ -118,5 +120,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item, onOpenDetails }) => {
         </button>
       </div>
     </article>
-  );
+  </Tilt3DCard>
+);
 };

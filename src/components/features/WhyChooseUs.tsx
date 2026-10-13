@@ -1,5 +1,6 @@
 import React from 'react';
 import { Leaf, Award, ShieldCheck, HeartHandshake } from 'lucide-react';
+import { Tilt3DCard } from '../scrollytelling/Tilt3DCard';
 
 export const WhyChooseUs: React.FC = () => {
   const pillars = [
@@ -26,7 +27,7 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 lg:py-24 bg-[#FAF8F3]">
+    <section id="experience" className="py-20 lg:py-24 bg-white/70 backdrop-blur-md relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -48,22 +49,21 @@ export const WhyChooseUs: React.FC = () => {
         {/* 4 Pillars Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {pillars.map((pillar) => (
-            <div
-              key={pillar.title}
-              className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-md transition-shadow duration-300 flex flex-col items-start"
-            >
-              <div className="w-12 h-12 rounded-full bg-stone-50 border border-stone-200/60 flex items-center justify-center mb-5 shrink-0">
-                {pillar.icon}
+            <Tilt3DCard key={pillar.title} maxTilt={8} scale={1.03} glare={true} className="h-full">
+              <div className="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-stone-200/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col items-start h-full">
+                <div className="w-12 h-12 rounded-full bg-stone-50 border border-stone-200/60 flex items-center justify-center mb-5 shrink-0">
+                  {pillar.icon}
+                </div>
+
+                <h3 className="font-serif font-bold text-lg text-[#171714] mb-2">
+                  {pillar.title}
+                </h3>
+
+                <p className="text-xs sm:text-sm text-[#77766F] leading-relaxed">
+                  {pillar.description}
+                </p>
               </div>
-
-              <h3 className="font-serif font-bold text-lg text-[#171714] mb-2">
-                {pillar.title}
-              </h3>
-
-              <p className="text-xs sm:text-sm text-[#77766F] leading-relaxed">
-                {pillar.description}
-              </p>
-            </div>
+            </Tilt3DCard>
           ))}
         </div>
 
